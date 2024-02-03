@@ -4,6 +4,8 @@ date_today=datetime.date.today()
 
 def dayadd(days_to_add): #THIS FUNCTION ADDS GIVEN DAYS TO A DATE
     return date_today + datetime.timedelta(days_to_add)
+def daysub(days_to_sub): #THIS FUNCTION SUBSTRACTS GIVEN DAYS TO A DATE
+    return date_today - datetime.timedelta(days_to_sub)
 def str_add(old_str, to_add_text, index): #THIS FUNCTION INSERTS A SUBSTRING TO A EXISTING STRING
     newstr=old_str[0:index] + to_add_text +'\n' + old_str[index:]
     return newstr
