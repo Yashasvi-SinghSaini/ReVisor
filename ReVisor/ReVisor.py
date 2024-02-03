@@ -28,7 +28,7 @@ CTkLabel(master=frame_3, text="WHAT DID YOU STUDY TODAY?",text_color='#ccddff', 
 Chapter = CTkEntry(master=frame_3, placeholder_text="Chapter?",text_color='#ffb3ff', width=400, font=("Cascadia Mono", 15))
 Topic = CTkEntry(master=frame_3, placeholder_text="Topic?",text_color='#ffb3ff', width=400, font=("Cascadia Mono", 15))
 button = CTkButton(master=frame_3, text="Add", command=button_func, font=("Cascadia Mono", 15))
-prv_day_check = CTkCheckBox(master=frame_3, text="Add for previous day?", font=("Cascadia Mono", 15), corner_radius=20)
+prv_day_check = CTkCheckBox(master=frame_3, text="Add for previous day?", font=("Cascadia Mono", 15), corner_radius=20, fg_color='#ff3333', checkmark_color='#66ff33', text_color='#ffe6e6', checkbox_width=30)
 
 prv_day_check.pack()
 Chapter.pack(expand=True, pady=15, padx=20)
