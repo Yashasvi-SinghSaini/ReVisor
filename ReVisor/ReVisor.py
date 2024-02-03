@@ -13,14 +13,25 @@ frame_3.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=50, pady=50)
 
 def button_func():
     if Chapter.get() != '':
-        if Topic.get() != '':
-            ReVisor_funcs.rev_topic__insert(Chapter.get(), Topic.get(), prv_day_check.get())
-            Topic.delete(0, len(Topic.get()))
-            playsound.playsound('Assets/btn_clck.wav')
+        if '___' not in Chapter.get():
+            if Topic.get() != '':
+                if '___' not in Topic.get():
+                    ReVisor_funcs.rev_topic__insert(Chapter.get(), Topic.get(), prv_day_check.get())
+                    Topic.delete(0, len(Topic.get()))
+                    playsound.playsound('Assets/btn_clck.wav')
+                else:
+                    underscore_error = CTkLabel(master=frame_3, text="Don't Use ___ in topic name",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
+                    underscore_error.pack(expand=True, pady=6, padx=2)
+            else:
+                topic_error = CTkLabel(master=frame_3, text="ENTER TOPIC!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
+                topic_error.pack(expand=True, pady=6, padx=2)
+                
         else:
-            CTkLabel(master=frame_3, text="ENTER TOPIC!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18)).pack(expand=True, pady=6, padx=2)
+            underscore_error = CTkLabel(master=frame_3, text="Don't Use ___ in chapter name",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
+            underscore_error.pack(expand=True, pady=6, padx=2)
     else:
-        CTkLabel(master=frame_3, text="ENTER CHAPTER!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18)).pack(expand=True, pady=6, padx=2)
+        chap_error = CTkLabel(master=frame_3, text="ENTER CHAPTER!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
+        chap_error.pack(expand=True, pady=6, padx=2)
         
 set_default_color_theme("blue")
 
