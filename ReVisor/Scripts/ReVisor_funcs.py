@@ -45,7 +45,7 @@ def rev_topic__insert(topic, subtopic, prv):
 
 
 
-def rev_rem(): #RETURNS FINAL REVISION LIST
+def rev_topic__get(): #RETURNS FINAL REVISION LIST
     with open('Assets/rdate.yashasvi', 'r') as file_read:
         date_data = file_read.read() #READS THE DATA OF rdate.ext
         for i in range(1, len(date_data.split('___')), 2): #BREAKS DATA IN LIST AND SEPARATES OUT DATE ENTRIES

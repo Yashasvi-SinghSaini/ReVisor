@@ -39,6 +39,6 @@ frame_1 = CTkFrame(master=app, fg_color="#ff704d", border_width=5)
 frame_1.grid(row=0, column=2, rowspan=3)
 
 CTkLabel(master=frame_1, text="TOPICS TO REVISE TODAY:", text_color='#b3ffff', font=("Cascadia Mono SemiBold", 25), justify="center").pack(expand=True, pady=15, padx=20)
-CTkLabel(master=frame_1, text=ReVisor_funcs.rev_rem(), text_color='#b3ffb3',font=("Cascadia Mono", 20), justify="left").pack(expand=True, pady=15, padx=20)
+CTkLabel(master=frame_1, text=ReVisor_funcs.rev_topic__get(), text_color='#b3ffb3',font=("Cascadia Mono", 20), justify="left").pack(expand=True, pady=15, padx=20)
 
 app.mainloop()
