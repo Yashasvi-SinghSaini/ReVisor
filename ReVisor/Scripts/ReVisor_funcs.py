@@ -28,7 +28,7 @@ def rev_topic__insert(topic, subtopic, prv):
                     file_append.write(f"___{daychange(i-1)}___•{topic} ===> {subtopic}") #INSERTS NEW DATE ENTRY IN rdate.yashasvi
     elif prv == 0:
         with open('Assets/rdate.yashasvi', 'a') as file_append: #IN THIS ITERATION WE INSERT NEW ENTRIES IN DATABASE
-            adding_day=[1,8,22,50,100,150,200,250,300] #REVISION GAP 
+            adding_day=[1,8,22,50,80,110,170,230,290, 370] #REVISION GAP 
 
             for i in adding_day: 
                 with open('Assets/rdate.yashasvi', 'r') as file_read:
