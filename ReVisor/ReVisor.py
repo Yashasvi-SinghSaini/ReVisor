@@ -38,22 +38,22 @@ def button_func():
 frame_1 = CTkFrame(master=app, fg_color="#ff9900", border_width=5)
 frame_1.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=50, pady=50)
 
-
 study_head = CTkLabel(master=frame_1, text='WHAT DID YOU STUDY TODAY', text_color='#ccddff', font=("Cascadia Mono SemiBold", 25), justify="center")
 Chapter = CTkEntry(master=frame_1, placeholder_text="Chapter?",text_color='#ffb3ff', width=400, font=("Cascadia Mono", 15))
 Topic = CTkEntry(master=frame_1, placeholder_text="Topic?",text_color='#ffb3ff', width=400, font=("Cascadia Mono", 15))
 button = CTkButton(master=frame_1, text="Add", command=button_func, font=("Cascadia Mono", 15))
-prv_day_check = CTkCheckBox(master=frame_1, text="Add for previous day?", font=("Cascadia Mono", 15), corner_radius=20, fg_color='#ff3333', checkmark_color='#66ff33', text_color='#ffe6e6', checkbox_width=30)
+prv_day_check = CTkCheckBox(master=frame_1, text="Add for previous day?", font=("Cascadia Mono", 15), corner_radius=20, fg_color='#ff3333', checkmark_color='#66ff33', text_color='#ffe6e6', checkbox_width=30, hover_color='#ff4d4d')
 
-'''
+
 def today_yester_study():
-    if prv_day_check.get()==1:
+    if prv_day_check.get()==0:
+        study_head.configure(text="WHAT DID YOU STUDY TODAY")
+    elif prv_day_check.get()==1:
         study_head.configure(text="WHAT DID YOU STUDY YESTERDAY") 
 
-today_yester_study()
-'''
+prv_day_check.configure(command=today_yester_study)
 
-study_head.pack(expand=True, pady=(30, 15))
+study_head.pack(expand=True, pady=(30, 15), padx= 20)
 prv_day_check.pack()
 Chapter.pack(expand=True, pady=15, padx=20)
 Topic.pack(expand=True, pady=15, padx=20)
