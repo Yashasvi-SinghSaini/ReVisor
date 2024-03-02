@@ -1,9 +1,11 @@
 from customtkinter import *
 from Scripts import ReVisor_funcs
 import playsound
+import pandas
+import datetime
 
 app = CTk()
-app.geometry("1200x400")
+app.geometry("1400x400")
 app.wm_title("ReVisor")
 app.iconbitmap("Assets/icon.ico")
 app._set_appearance_mode('dark')
@@ -13,25 +15,50 @@ set_default_color_theme("blue")
 
 def button_func():
     if Chapter.get() != '':
-        if '___' not in Chapter.get():
-            if Topic.get() != '':
-                if '___' not in Topic.get():
-                    ReVisor_funcs.rev_topic__insert(Chapter.get(), Topic.get(), prv_day_check.get())
-                    Topic.delete(0, len(Topic.get()))
-                    playsound.playsound('Assets/btn_clck.wav')
-                else:
-                    underscore_error = CTkLabel(master=frame_1, text="Don't Use ___ in topic name",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
-                    underscore_error.pack(expand=True, pady=6, padx=2)
-            else:
-                topic_error = CTkLabel(master=frame_1, text="ENTER TOPIC!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
-                topic_error.pack(expand=True, pady=6, padx=2)
-                
+        if Topic.get() != '':
+            csv_old=pandas.read_csv('Assets/data.csv')
+            if prv_day_check.get()==0:
+                data={"Date":[ReVisor_funcs.daychange(1),
+                            ReVisor_funcs.daychange(8),
+                            ReVisor_funcs.daychange(22),
+                            ReVisor_funcs.daychange(50),
+                            ReVisor_funcs.daychange(80),
+                            ReVisor_funcs.daychange(110),
+                            ReVisor_funcs.daychange(170),
+                            ReVisor_funcs.daychange(230),
+                            ReVisor_funcs.daychange(290),
+                            ReVisor_funcs.daychange(370),
+                            ReVisor_funcs.daychange(430),
+                            ReVisor_funcs.daychange(590),
+                            ReVisor_funcs.daychange(650)],
+                    "Chapter":[Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get()],
+                    "Topics":[(Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get())]} 
+            elif prv_day_check.get() == 1:
+                    data={"Date":[ReVisor_funcs.daychange(1-1),
+                            ReVisor_funcs.daychange(8-1),
+                            ReVisor_funcs.daychange(22-1),
+                            ReVisor_funcs.daychange(50-1),
+                            ReVisor_funcs.daychange(80-1),
+                            ReVisor_funcs.daychange(110-1),
+                            ReVisor_funcs.daychange(170-1),
+                            ReVisor_funcs.daychange(230-1),
+                            ReVisor_funcs.daychange(290-1),
+                            ReVisor_funcs.daychange(370-1),
+                            ReVisor_funcs.daychange(430-1),
+                            ReVisor_funcs.daychange(590-1),
+                            ReVisor_funcs.daychange(650-1)],
+                    "Chapter":[Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get(), Chapter.get()],
+                    "Topics":[(Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get()), (Topic.get())]} 
+            csv_new=pandas.DataFrame(data)
+            csv_combined = pandas.concat([csv_old, csv_new])
+            csv_combined.to_csv('Assets/data.csv', index=False)
+            csv_combined = pandas.read_csv('Assets/data.csv')
         else:
-            underscore_error = CTkLabel(master=frame_1, text="Don't Use ___ in chapter name",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
-            underscore_error.pack(expand=True, pady=6, padx=2)
+            CTkLabel(master=frame_1, text="Enter Doubt!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
     else:
-        chap_error = CTkLabel(master=frame_1, text="ENTER CHAPTER!!!",text_color='#ff0000', width=400, font=("Cascadia Mono", 18))
-        chap_error.pack(expand=True, pady=6, padx=2)
+        CTkLabel(master=frame_1, text="Enter Chapter!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
+    Topic.delete(0, len(Topic.get()))
+    playsound.playsound('Assets/btn_clck.wav')
 
 
 
@@ -61,10 +88,20 @@ button.pack(expand=True, fill="both", pady=(30, 15), padx=30)
 
 
 
-frame_2 = CTkFrame(master=app, fg_color="#ff704d", border_width=5)
+frame_2 = CTkScrollableFrame(master=app, fg_color="#ff704d", border_width=5, width=700)
 frame_2.grid(row=0, column=2, rowspan=3)
 
 CTkLabel(master=frame_2, text="TOPICS TO REVISE TODAY:", text_color='#b3ffff', font=("Cascadia Mono SemiBold", 25), justify="center").pack(expand=True, pady=15, padx=20)
-CTkLabel(master=frame_2, text=ReVisor_funcs.rev_topic__get(), text_color='#b3ffb3',font=("Cascadia Mono", 20), justify="left").pack(expand=True, pady=15, padx=20)
+
+csv = pandas.read_csv('Assets/data.csv')
+
+print=0
+for i in range(len(csv.index)):
+    if csv['Date'][i] == str(datetime.date.today()):
+        data = ReVisor_funcs.shorten_doubt(csv['Topics'][i])
+        doubt_check = CTkLabel(master=frame_2, text=f'➧{csv['Chapter'][i]} ⇛ {data}', text_color='#b3ffb3',font=("Cascadia Mono", 20), justify="left").pack(expand=True, pady=2, padx=10)
+        print=1
+if print==0:
+    CTkLabel(master=frame_2, text=f'NOTHING TO REVISE TODAY!!!', text_color='#b3ffb3',font=("Cascadia Mono", 20), justify="left").pack(expand=True, pady=2, padx=10)
 
 app.mainloop()
