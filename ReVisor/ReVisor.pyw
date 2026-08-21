@@ -1,6 +1,6 @@
 from customtkinter import *
 from Scripts import ReVisor_funcs
-import playsound
+from playsound3 import playsound
 
 app = CTk()
 app.geometry("1200x400")
